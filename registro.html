@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C&M travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!--banner-->
+    <div class="w-screen h-[70px] bg-blue-500 text-white font-bold text-2xl pl-5 flex items-center">C&M travels</div>
+
+    <!--fondo de la pagina-->
+    <div class="bg-gray-100 w-screen h-lvh flex justify-center">
+
+        <!--contenedor del registro-->
+        <div class="bg-white w-[600px] h-[500px] mt-[60px] border border-gray-300 rounded-lg">
+
+            <!--Registro-->
+            <div class="w-[600px] h-auto pt-4 text-center text-3xl font-bold text-gray-800">Registro</div>
+
+            <!--contenedor del formulario para el login-->
+            <div class=" w-[600px] h-auto">
+
+                <!--formulario login-->
+                <form action="" id="form-login" class="grid grid-cols-2 gap-4 p-4">
+
+                     <!-- Nombre -->
+                    <div class="flex flex-col">
+                        <label for="nombre-registro">Nombre:</label>
+                        <input type="text" id="nombre-registro" placeholder="Ingrese su nombre" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Nacionalidad -->
+                    <div class="flex flex-col">
+                        <label for="nacionalidad-registro">Nacionalidad:</label>
+                        <input type="text" id="nacionalidad-registro" placeholder="Ingrese su nacionalidad" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Dirección -->
+                    <div class="flex flex-col">
+                        <label for="direccion-registro">Dirección:</label>
+                        <input type="text" id="direccion-registro" placeholder="Ingrese su dirección" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Fecha nacimiento -->
+                    <div class="flex flex-col">
+                        <label for="fechaNacimiento-registro">Fecha nacimiento:</label>
+                        <input type="date" id="fechaNacimiento-registro" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Tipo documento -->
+                    <div class="flex flex-col">
+                        <label for="tipoDocumento-registro">Tipo documento:</label>
+                        <select id="tipoDocumento-registro" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                        <option value="">Seleccionar opción</option>
+                        <option value="cc">Cédula de ciudadanía</option>
+                        <option value="ti">Tarjeta de identidad</option>
+                        </select>
+                    </div>
+
+                    <!-- Número documento -->
+                    <div class="flex flex-col">
+                        <label for="numeroDocumento-registro">Número documento:</label>
+                        <input type="number" id="numeroDocumento-registro" placeholder="Ingrese su número" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Correo -->
+                    <div class="flex flex-col">
+                        <label for="correo-registro">Correo:</label>
+                        <input type="email" id="correo-registro" placeholder="Ingrese su correo" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!-- Contraseña -->
+                    <div class="flex flex-col">
+                        <label for="contraseña-registro">Contraseña:</label>
+                        <input type="password" id="contraseña-registro" placeholder="Ingrese su contraseña" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                    </div>
+
+                    <!--telefono 1-->
+                    <div>
+                        <label for="telefono1-registro">Teléfono principal: </label>
+                        <input type="number" id="telefono1-register" placeholder="ingrese su teléfono" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] w-[275px] p-2">
+                    </div>
+
+                    <!--telefono 2-->
+                    <div>
+                        <label for="telefono2-register">Teléfono secundario: </label>
+                        <input type="number" id="telefono2-register" placeholder="ingrese su teléfono" required
+                            class="border border-2 border-gray-400 rounded-lg h-[35px] w-[275px] p-2">
+                    </div>
+
+                    <!--botón para registrarse-->
+                    <div class="col-span-2 flex justify-center">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg w-[200px]">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
