@@ -1,7 +1,7 @@
 import cargarHTML from "./renderizado.js";
 
 const navegacion = () => {
-    cargarHTML('../filtroHoteles.html')
+    cargarHTML('../filtroVueloyHoteles.html')
 
     const pestañaVuelo=document.getElementById('boton-vuelos')
     const pestañaHoteles=document.getElementById('boton-hoteles')
@@ -13,6 +13,10 @@ const navegacion = () => {
 
     pestañaHoteles.addEventListener('click', ()=>{
         cargarHTML('../filtroHoteles.html')
+    })
+
+    pestañaPaquetes.addEventListener('click',()=>{
+        cargarHTML('../filtroVueloyHoteles.html')
     })
 }
 
