@@ -1,0 +1,197 @@
+﻿Diagnose log at 2025-11-16T20:45:11Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.5.1+90d5f897f164a8fe07d2aa3bf7db439b0b4e03ea
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26100)
+Reading environment variables... OK
+ Variables:
+HOMEPATH=\Users\Mi PC
+DriverData=C:\Windows\System32\Drivers\DriverData
+COMPUTERNAME=LAPTOP-GV315B0F
+GIT_TRACE2_PARENT_SID=e412493f-95d0-4156-b674-192f07b97fe9
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+PROCESSOR_LEVEL=23
+OneDrive=C:\Users\Mi PC\OneDrive
+SESSIONNAME=Console
+TMP=C:\Users\MIPC~1\AppData\Local\Temp
+PROCESSOR_REVISION=a000
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+VSCODE_GIT_ASKPASS_MAIN=c:\Users\Mi PC\AppData\Local\Programs\Microsoft VS Code\resources\app\extensions\git\dist\askpass-main.js
+SystemDrive=C:
+GIT_EXEC_PATH=C:/Program Files/Git/mingw64/libexec/git-core
+TEMP=C:\Users\MIPC~1\AppData\Local\Temp
+LOCALAPPDATA=C:\Users\Mi PC\AppData\Local
+MSYSTEM=MINGW64
+TERM=xterm-256color
+PROG40F0451B051=1
+ProgramW6432=C:\Program Files
+USERDOMAIN=LAPTOP-GV315B0F
+EFC_8576_2775293581=1
+TERM_PROGRAM=vscode
+EFC_8576_2283032206=1
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 160 Stepping 0, AuthenticAMD
+TMPDIR=C:\Users\MIPC~1\AppData\Local\Temp
+VSCODE_GIT_ASKPASS_EXTRA_ARGS=
+EFC_8576_1592913036=1
+GIT_ASKPASS=c:\Users\Mi PC\AppData\Local\Programs\Microsoft VS Code\resources\app\extensions\git\dist\askpass.sh
+EFC_8576_1262719628=1
+ProgramFiles(x86)=C:\Program Files (x86)
+PUBLIC=C:\Users\Public
+NUMBER_OF_PROCESSORS=8
+FPS_BROWSER_USER_PROFILE_STRING=Default
+CommonProgramFiles=C:\Program Files (x86)\Common Files
+VSCODE_INJECTION=1
+VSCODE_NONCE=cf5d6610-e8ae-4df7-8bc5-f2bee22d0ce1
+VSCODE_GIT_IPC_HANDLE=\\.\pipe\vscode-git-6e45629fee-sock
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_5660_KJYWMYZCITKSRQEO
+TERM_PROGRAM_VERSION=1.106.0
+PLINK_PROTOCOL=ssh
+ProgramData=C:\ProgramData
+MSYS=disable_pcon
+ProgramFiles=C:\Program Files (x86)
+EFC_8576_3789132940=1
+VSCODE_GIT_ASKPASS_NODE=C:\Users\Mi PC\AppData\Local\Programs\Microsoft VS Code\Code.exe
+SystemRoot=C:\WINDOWS
+ORIGINAL_XDG_CURRENT_DESKTOP=undefined
+HOME=C:\Users\Mi PC
+VSCODE_STABLE=1
+CommonProgramW6432=C:\Program Files\Common Files
+LOGONSERVER=\\LAPTOP-GV315B0F
+USERPROFILE=C:\Users\Mi PC
+COLORTERM=truecolor
+USERDOMAIN_ROAMINGPROFILE=LAPTOP-GV315B0F
+APPDATA=C:\Users\Mi PC\AppData\Roaming
+HOMEDRIVE=C:
+VSCODE_A11Y_MODE=0
+PSModulePath=C:\Users\Mi PC\OneDrive\Documentos\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+VBOX_HWVIRTEX_IGNORE_SVM_IN_USE=1
+USERNAME=CAMILO PACHECO
+PROCESSOR_ARCHITEW6432=AMD64
+FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+PROCESSOR_ARCHITECTURE=x86
+OS=Windows_NT
+ComSpec=C:\WINDOWS\system32\cmd.exe
+Path=C:/Program Files/Git/mingw64/libexec/git-core;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Mi PC\bin;c:\Users\Mi PC\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;c:\Users\Mi PC\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\copilotCli;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Users\Mi PC\AppData\Local\Programs\Python\Python314\Scripts\;C:\Users\Mi PC\AppData\Local\Programs\Python\Python314\;C:\Users\Mi PC\AppData\Local\Programs\Python\Launcher\;C:\Users\Mi PC\AppData\Local\Microsoft\WindowsApps;C:\Users\Mi PC\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Mi PC\AppData\Roaming\npm
+windir=C:\WINDOWS
+LANG=en_US.UTF-8
+ALLUSERSPROFILE=C:\ProgramData
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\Mi PC\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\Mi PC\AppData\Local\Temp\400c43c9995c1e32a29f8ff5'... OK
+Reading from temporary file 'C:\Users\Mi PC\AppData\Local\Temp\400c43c9995c1e32a29f8ff5'... OK
+Deleting temporary file 'C:\Users\Mi PC\AppData\Local\Temp\400c43c9995c1e32a29f8ff5'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\Mi PC
+UserDataDirectoryPath: C:\Users\Mi PC\.gcm
+GetCurrentDirectory(): C:\Users\Mi PC\OneDrive\Documentos\INGENIERÍA DE SISTEMAS\Bases de datos II\SISTEMAS_DE_GESTION_DE_VIAJES_C&M_Travels
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+ OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:64580/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.46.0.windows.1'
+Locating current repository...Git repository at 'C:/Users/Mi PC/OneDrive/Documentos/INGENIERÍA DE SISTEMAS/Bases de datos II/SISTEMAS_DE_GESTION_DE_VIAJES_C&M_Travels/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=openssl
+file:C:/Program Files/Git/etc/gitconfig	http.sslcainfo=C:/Program Files/Git/mingw64/etc/ssl/certs/ca-bundle.crt
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/Mi PC/.gitconfig	core.editor="C:\Users\Mi PC\AppData\Local\Programs\Microsoft VS Code\bin\code" --wait
+file:C:/Users/Mi PC/.gitconfig	user.name=Camilo Pacheco
+file:C:/Users/Mi PC/.gitconfig	user.email=camilodavidpachecoprieto@gmail.com
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/MichellCarvajal/proyecto-final-base-de-datos-II.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\Mi PC\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\Mi PC\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+
