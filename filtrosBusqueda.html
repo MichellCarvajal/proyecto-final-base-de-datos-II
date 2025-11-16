@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./js/main.js" type="module" defer></script>
 </head>
 <body>
     <!--banner-->
@@ -33,128 +34,25 @@
     <div class="bg-gray-900 w-screen h-lvh relative">
     </div>
     
-    <!--contenedor tabs-->
+    <!--contenedor filtros-->
     <div class="bg-white w-[1250px] h-[180px] absolute top-[200px] left-[140px] rounded-xl">
 
          <!-- pestañas -->
-        <div class="bg-gray-100 h-[5 0px] flex items-center gap-5 border-b border-gray-500 pl-5 rounded-t-xl">
-            <button class="tab-btn active text-gray-800 font-semibold pb-2" data-tab="vuelos">
+        <div class="bg-gray-100 h-[50px] flex items-center gap-5 border-b border-gray-500 pl-5 rounded-t-xl">
+            <button class="tab-btn text-gray-800 font-semibold pb-2" id="boton-vuelos">
                 Vuelos
             </button>
-            <button class="tab-btn text-gray-800 font-semibold pb-2" data-tab="hoteles">
+            <button class="tab-btn text-gray-800 font-semibold pb-2" id="boton-hoteles">
                 Hoteles
             </button>
-            <button class="tab-btn text-gray-800 font-semibold pb-2" data-tab="paquetes">
-                Paquetes
+            <button class="tab-btn text-gray-800 font-semibold pb-2" id="boton-paquetes">
+                Vuelos + Hoteles
             </button>
         </div>
 
-         <!-- contenido de las pestañas -->
-        <div class="bg-white w-[1250px] h-[180px] rounded-xl">
+         <!-- contenido-->
+        <div class="bg-white w-[1250px] h-[180px] rounded-xl" id="contenido-pestaña">
 
-            <!-- Vuelos (contenido activo por defecto) -->
-            <div class="tab-content active" id="vuelos">
-                <!-- contenedor de filtro de vuelos -->
-                <div class="w-full bg-white p-6">
-
-                    <form action="">
-                        
-                        <!-- tipo de viaje -->
-                        <div class="flex gap-8 mb-5 text-gray-700">
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="tipoViaje" checked>
-                                <span>Ida y Vuelta</span>
-                            </label>
-
-                            <label class="flex items-center gap-2 cursor-pointer">
-                                <input type="radio" name="tipoViaje">
-                                <span>Solo Ida</span>
-                            </label>
-
-                            |
-
-                            <div>
-                                <select name="categoria" class="bg-white">
-                                    <option value="economica">Económico</option>
-                                    <option value="premium">Premium</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="flex gap-4 relative">
-
-                            <!-- Origen -->
-                            <div class="flex items-center w-[250px] h-[65px] border rounded px-4 bg-white">
-                                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
-                                <div>
-                                    <p class="text-sm text-gray-500">Origen</p>
-                                    <input type="text" placeholder="¿desde donde viajas?">
-                                </div>
-                            </div>
-
-                            <!-- Ícono flotante entre origen y destino -->
-                            <div class="absolute left-[233px] top-[10px]
-                                        bg-white border rounded-full w-[45px] h-[45px]
-                                        flex items-center justify-center text-blue-600 text-xl shadow">
-                                <i class="fa-solid fa-right-left"></i>
-                            </div>
-
-                            <!-- Destino -->
-                            <div class="col-span-2 flex items-center w-[250px] h-[65px] border rounded px-4 bg-white">
-                                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
-                                <div>
-                                    <p class="text-sm text-gray-500">Destino</p>
-                                    <input type="text" placeholder="¿a dónde viajas?">
-                                </div>
-                            </div>
-
-                            <!--fecha de Salida -->
-                            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center">
-                                <label class="text-xs text-gray-500">Salida</label>
-                                <div class="flex items-center gap-2">
-                                    <input type="date" class="w-full outline-none">
-                                </div>
-                            </div>
-
-                            <!--fecha de Regreso -->
-                            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center">
-                                <label class="text-xs text-gray-500">Regreso</label>
-                                <div class="flex items-center gap-2">
-                                    <input type="date" class="w-full outline-none">
-                                </div>
-                            </div>
-
-                            <!-- Viajeros -->
-                            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
-                                <label class="text-xs text-gray-500">Viajeros</label>
-                                <div class="flex items-center gap-2">
-                                    <i class="fa-solid fa-user text-gray-600"></i>
-                                    <input type="number" min="1" class="w-[80px]">
-                                </div>
-                            </div>
-
-                            <!-- botón buscar -->
-                            <div class="col-span-2 flex items-center justify-end">
-                                <button class="w-[150px] h-[65px] bg-yellow-400 text-black font-bold rounded-lg">
-                                    Buscar Vuelos
-                                </button>
-                            </div>
-
-                        </form>
-
-                    </div>
-            </div>
-
-
-            <!-- Hoteles -->
-            <div class="tab-content hidden" id="hoteles">
-                <!-- contenido de hoteles -->
-            </div>
-
-            <!-- Paquetes -->
-            <div class="tab-content hidden" id="paquetes">
-                <!-- contenido de paquetes -->
-            </div>
         </div>
     </div>
 
