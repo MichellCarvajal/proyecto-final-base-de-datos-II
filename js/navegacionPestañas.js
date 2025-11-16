@@ -1,7 +1,7 @@
 import cargarHTML from "./renderizado.js";
 
 const navegacion = () => {
-    cargarHTML('../filtroVueloyHoteles.html')
+    cargarHTML('../filtroVuelo.html')
 
     const pestañaVuelo=document.getElementById('boton-vuelos')
     const pestañaHoteles=document.getElementById('boton-hoteles')
