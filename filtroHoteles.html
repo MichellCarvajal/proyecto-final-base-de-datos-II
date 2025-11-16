@@ -1,0 +1,54 @@
+<div class="w-[1250px] h-[180px] p-6 flex">
+
+    <form class="flex gap-4 mt-[20px]">
+        <!-- Origen -->
+        <div class="flex items-center w-[300px] h-[65px] border rounded px-4 bg-white">
+            <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+            <div>
+                <p class="text-sm text-gray-500">Origen</p>
+                <input type="text" placeholder="¿desde donde viajas?">
+            </div>
+        </div>
+
+        <!--fecha de Salida -->
+        <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+            <label class="text-xs text-gray-500">Salida</label>
+            <div class="flex items-center gap-2">
+                <input type="date" class="w-full outline-none">
+            </div>
+        </div>
+
+        <!--fecha de Regreso -->
+        <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+            <label class="text-xs text-gray-500">Regreso</label>
+            <div class="flex items-center gap-2">
+                <input type="date" class="w-full outline-none">
+            </div>
+        </div>
+
+        <!-- Habitaciones -->
+        <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
+            <label class="text-xs text-gray-500">Habitaciones</label>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user text-gray-600"></i>
+                <input type="number" min="1" class="w-[80px]">
+            </div>
+        </div>
+
+        <!-- Viajeros -->
+        <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
+            <label class="text-xs text-gray-500">Viajeros</label>
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-user text-gray-600"></i>
+                <input type="number" min="1" class="w-[80px]">
+            </div>
+        </div>
+
+        <!-- botón buscar -->
+        <div class="h-[65px] flex items-center">
+            <button class="w-[150px] h-full bg-yellow-400 text-black font-bold rounded-lg">
+                Buscar Vuelos
+            </button>
+        </div>
+    </form>
+</div>
