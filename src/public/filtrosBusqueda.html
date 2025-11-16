@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C&M travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    /* ---------------------------------------------------- */
+    /* CSS para eliminar las flechas de input[type="number"] */
+    /* ---------------------------------------------------- */
+    
+    /* 1. Ocultar en Chrome, Safari, Edge (Motores WebKit/Blink) */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* 2. Compatibilidad cruzada (aplicada al input itself) */
+    input[type=number] {
+        /* Propiedad estándar (el futuro) */
+        appearance: none; 
+        /* Para Firefox (legacy, mantiene apariencia de campo de texto estándar) */
+        -moz-appearance: textfield; 
+    }
+    /* ---------------------------------------------------- */
+</style>
+    <script>
+        // Configuración de Tailwind para colores personalizados
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Nombres de color que coinciden con el código JS anterior
+                        'primary-blue': '#3B82F6', 
+                        'primary-yellow': '#FACC15', 
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div class="w-screen h-[70px] bg-primary-blue flex items-center justify-between px-5 border-b-2 border-b-gray-200">
+            <div class="text-white font-bold text-2xl">C&M travels</div>
+            <div class="flex gap-5 text-white text-2xl cursor-pointer">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-solid fa-circle-user"></i> 
+            </div>
+        </div>
+        <div class="bg-primary-blue w-screen h-[300px]"></div>
+    </div>
+    
+    <div class="bg-gray-900 w-screen h-lvh relative"></div>
+    
+    <div class="bg-white w-[90%] max-w-[1250px] mx-auto absolute top-[200px] left-0 right-0 rounded-xl shadow-2xl pb-6">
+
+        <div class="bg-gray-100 h-[50px] flex items-center gap-8 border-b border-gray-200 pl-6 rounded-t-xl">
+            <button class="tab-btn text-gray-800 font-semibold pb-2" data-tab="vuelos">Vuelos</button>
+            <button class="tab-btn text-gray-800 font-semibold pb-2" data-tab="hoteles">Hoteles</button>
+            <button class="tab-btn text-gray-800 font-semibold pb-2" data-tab="paquetes">Paquetes</button>
+        </div>
+
+        <div class="px-6 pt-6">
+
+            <div class="tab-content" id="vuelos">
+                <div class="w-full bg-white">
+                    
+                    <div id="vuelos-message-container" class="mb-4 h-6 text-center font-semibold"></div>
+
+                    <form id="form-vuelos">
+                        
+                        <div class="flex gap-8 mb-5 text-gray-700">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="tipoViaje" value="ida_vuelta" checked>
+                                <span>Ida y Vuelta</span>
+                            </label>
+
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="radio" name="tipoViaje" value="solo_ida">
+                                <span>Solo Ida</span>
+                            </label>
+
+                            <div class="text-gray-300">|</div>
+
+                            <div>
+                                <select id="select-categoria" name="categoria" class="bg-white border-none focus:ring-0 cursor-pointer">
+                                    <option value="economica">Económico</option>
+                                    <option value="premium">Premium</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 relative">
+
+                            <div class="flex items-center w-[250px] h-[65px] border rounded-lg px-4 bg-white">
+                                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+                                <div class="flex flex-col w-full">
+                                    <p class="text-sm text-gray-500">Origen</p>
+                                    <input type="text" id="input-origen" required placeholder="¿desde donde viajas?" class="outline-none text-gray-900 font-semibold text-base">
+                                </div>
+                            </div>
+
+                            <button id="btn-intercambiar" type="button" class="absolute left-[233px] top-[10px] z-10
+                                    bg-white border border-gray-300 rounded-full w-[45px] h-[45px]
+                                    flex items-center justify-center text-primary-blue text-xl shadow">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
+
+                            <div class="flex items-center w-[250px] h-[65px] border rounded-lg px-4 bg-white">
+                                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+                                <div class="flex flex-col w-full">
+                                    <p class="text-sm text-gray-500">Destino</p>
+                                    <input type="text" id="input-destino" required placeholder="¿a dónde viajas?" class="outline-none text-gray-900 font-semibold text-base">
+                                </div>
+                            </div>
+
+                            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+                                <label for="input-fecha-salida" class="text-xs text-gray-500">Salida</label>
+                                <div class="flex items-center gap-2">
+                                    <input type="date" id="input-fecha-salida" required class="w-full outline-none text-gray-900 font-semibold cursor-pointer">
+                                </div>
+                            </div>
+
+                            <div id="div-fecha-regreso" class="border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+                                <label for="input-fecha-regreso" class="text-xs text-gray-500">Regreso</label>
+                                <div class="flex items-center gap-2">
+                                    <input type="date" id="input-fecha-regreso" required class="w-full outline-none text-gray-900 font-semibold cursor-pointer">
+                                </div>
+                            </div>
+
+                            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
+                                <label for="input-viajeros" class="text-xs text-gray-500">Viajeros</label>
+                                <div class="flex items-center gap-2">
+                                    <i class="fa-solid fa-user text-gray-600"></i>
+                                    <input type="number" id="input-viajeros" min="1" value="1" required class="w-[80px] outline-none text-gray-900 font-semibold">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-end">
+                                <button id="btn-buscar-vuelos" type="submit" class="w-[150px] h-[65px] bg-primary-yellow text-black font-bold rounded-lg shadow-md hover:bg-yellow-500 transition-all duration-200">
+                                    Buscar Vuelos
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                    
+                    <div id="vuelos-results-container" class="mt-8 pt-4 border-t border-gray-200">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Resultados de Búsqueda</h2>
+                        <div id="results-list" class="space-y-4">
+                             <div class="p-4 text-gray-500 bg-gray-50 rounded-lg">Aún no se ha realizado ninguna búsqueda.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="tab-content hidden" id="hoteles">
+                <p class="text-gray-600 p-4">Aquí puedes buscar Hoteles.</p>
+            </div>
+
+            <div class="tab-content hidden" id="paquetes">
+                <p class="text-gray-600 p-4">Aquí puedes buscar Paquetes de Viaje.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/api.js"></script>
+    <script type="module" src="./js/vuelos.js"></script>
+
+</body>
+</html>
