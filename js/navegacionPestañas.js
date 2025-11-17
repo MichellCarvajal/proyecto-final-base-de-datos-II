@@ -1,4 +1,5 @@
 import cargarHTML from "./renderizado.js";
+import idaRegreso from "./soloVuelta.js";
 
 const navegacion = async () => {
     await cargarHTML('./filtroVuelo.html')
@@ -8,7 +9,9 @@ const navegacion = async () => {
     const pestañaPaquetes=document.getElementById('boton-paquetes')
     
     pestañaVuelo.addEventListener('click', ()=> {
-        cargarHTML('./filtroVuelo.html')
+        cargarHTML('./filtroVuelo.html').then(() => {
+            idaRegreso()
+        })
     })
 
     pestañaHoteles.addEventListener('click', ()=>{
