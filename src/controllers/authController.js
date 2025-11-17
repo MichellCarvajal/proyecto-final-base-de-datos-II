@@ -106,13 +106,16 @@ exports.searchHotels = async (req, res) => {
             fechaRegreso = d.toISOString().split("T")[0];
         }
 
+        let estrellas = parseInt(payload.estrellas);
+        if (isNaN(estrellas)) estrellas = null;
+
         const data = {
             destino,
             fechaSalida,
             fechaRegreso,
             habitaciones: parseInt(payload.habitaciones) || 1,
             viajeros: parseInt(payload.viajeros) || 1,
-            estrellas: parseInt(payload.estrellas) || 1
+            estrellas
         };
 
         console.log("🔍 DEBUG searchHotels - parámetros finales:", data);
@@ -142,27 +145,20 @@ exports.searchHotels = async (req, res) => {
     }
 };
 
-
-// BÚSQUEDA DE PAQUETES
-exports.searchPackages = async (req, res) => {
+//NUEVA FUNCION HABITACIONES CONTROLLER
+exports.getHotelRooms = async (req, res) => {
     try {
-        const searchData = req.body;
-        if (!searchData.origen || !searchData.destino || !searchData.fechaSalida || !searchData.viajeros) {
-            return res.status(400).json({ success: false, message: 'Faltan campos obligatorios para la búsqueda de paquetes.' });
-        }
+        const { idHotel } = req.params;
 
-        const packages = await authService.findAvailablePackages(searchData);
+        const rooms = await authService.findRoomsByHotel(idHotel);
+
         return res.status(200).json({
             success: true,
-            packages,
-            message: `Búsqueda completada. Encontrados ${packages.length} paquetes.`
+            rooms
         });
 
     } catch (error) {
-        console.error('❌ Error en searchPackages:', error);
-        if (error.message && error.message.includes('Base de datos')) {
-            return res.status(503).json({ success: false, message: error.message });
-        }
-        return res.status(500).json({ success: false, message: 'Error interno del servidor al buscar paquetes.' });
+        console.error("❌ Error getHotelRooms:", error);
+        return res.status(500).json({ success: false, message: "Error interno" });
     }
 };

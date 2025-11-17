@@ -157,10 +157,13 @@ console.log("Valores:", sqlValues);
     }
 };
 
+//HOTELES
 exports.findAvailableHotels = async (data) => {
     const { destino, fechaSalida, fechaRegreso, habitaciones, estrellas } = data;
 
-    const sql = `
+    console.log("🔎 DEBUG → findAvailableHotels recibió estrellas:", estrellas);
+
+    let sql = `
         SELECT 
             h.idHotel,
             h.nombre,
@@ -181,8 +184,25 @@ exports.findAvailableHotels = async (data) => {
             AND sh.fechaSalida > ?
 
         WHERE LOWER(h.ciudad) = ?
-          AND h.estrellas >= ?
-          AND sh.idHabitacion IS NULL   -- habitación libre
+    `;
+
+    const sqlValues = [
+        fechaRegreso,
+        fechaSalida,
+        destino.toLowerCase()
+    ];
+
+    // ⭐ SI EL USUARIO FILTRA POR ESTRELLAS, AÑADIMOS LA CONDICIÓN
+    if (estrellas !== null) {
+        sql += ` AND h.estrellas = ? `;
+        sqlValues.push(estrellas);
+        console.log("⭐ SQL → Se filtrará por estrellas =", estrellas);
+    } else {
+        console.log("⚠️ SQL → NO se filtra por estrellas (es null)");
+    }
+
+    sql += `
+        AND sh.idHabitacion IS NULL
 
         GROUP BY h.idHotel, h.nombre, h.ciudad, h.pais, h.estrellas
 
@@ -190,70 +210,35 @@ exports.findAvailableHotels = async (data) => {
         ORDER BY precioMinimo ASC
     `;
 
-    const sqlValues = [
-        fechaRegreso,  // sh.fechaEntrada < fechaRegreso
-        fechaSalida,   // sh.fechaSalida > fechaSalida
-        destino.toLowerCase(),
-        estrellas || 0,
-        habitaciones || 1
-    ];
+    sqlValues.push(habitaciones || 1);
 
-    try {
-        const [rows] = await pool.query(sql, sqlValues);
-        return rows;
-    } catch (error) {
-        console.error("Error SQL Hoteles:", error);
-        throw new Error("Base de datos: " + error.message);
-    }
+    // Ejecutar consulta
+    console.log("📌 SQL final ejecutado:", sql);
+    console.log("📌 Valores SQL:", sqlValues);
+
+    const [rows] = await pool.query(sql, sqlValues);
+
+    // Mostrar estrellas reales obtenidas
+    rows.forEach(h => {
+        console.log(`🏨 Hotel encontrado: ${h.nombre} → Estrellas en BD: ${h.estrellas}`);
+    });
+
+    return rows;
 };
 
 
-////////////////////////////////////////////////////////////////////////////////
-// BUSQUEDA DE PAQUETES (usa vuelos + hoteles)
-exports.findAvailablePackages = async (data) => {
-    const { origen, destino, fechaSalida, fechaRegreso, tripType, viajeros, habitaciones, estrellas } = data;
+//NUEVA FUNCION HABITACIONES
+exports.findRoomsByHotel = async (idHotel) => {
+    const sql = `
+        SELECT 
+            idHabitacion,
+            categoria,
+            disponibilidad,
+            precioNoche
+        FROM HABITACION
+        WHERE idHotel = ?
+    `;
 
-    // Reutilizar funciones anteriores
-    const availableFlights = await exports.findAvailableFlights({
-        origen, destino, fechaSalida, fechaRegreso, tripType, viajeros, clase: data.clase || 'economy'
-    });
-
-    const availableHotels = await exports.findAvailableHotels({
-        destino, fechaCheckin: fechaSalida, fechaCheckout: fechaRegreso, viajeros, habitaciones, estrellas
-    });
-
-    const packages = [];
-
-    if (availableFlights.length > 0 && availableHotels.length > 0) {
-        // Tomamos un vuelo de ida (si existe) y el primer hotel
-        const bestFlight = availableFlights.find(f => f.origen && f.origen.toLowerCase() === origen.toLowerCase()) || availableFlights[0];
-        const bestHotel = availableHotels[0];
-
-        if (bestFlight && bestHotel) {
-            const date1 = new Date(fechaSalida);
-            const date2 = new Date(fechaRegreso || fechaSalida);
-            const diffTime = Math.abs(date2 - date1);
-            const diffDays = Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
-
-            const vueloPrice = (bestFlight.precioBase || 0) * (viajeros || 1);
-            const hotelPrice = (bestHotel.precioNoche || 0) * diffDays * (habitaciones || 1);
-            const precioTotalBruto = vueloPrice + hotelPrice;
-
-            const precioFinal = precioTotalBruto * 0.85; // ahorro simulado 15%
-            const ahorroSimulado = 15;
-
-            packages.push({
-                id: `PKG-${Date.now()}`,
-                origen,
-                destino,
-                vueloIda: bestFlight,
-                hotel: bestHotel,
-                noches: diffDays,
-                precioTotal: precioFinal,
-                ahorro: ahorroSimulado
-            });
-        }
-    }
-
-    return packages;
+    const [rows] = await pool.query(sql, [idHotel]);
+    return rows;
 };

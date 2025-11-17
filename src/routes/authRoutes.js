@@ -15,4 +15,7 @@ router.post('/flights/search', authController.searchFlights);
 router.post('/hotels/search', authController.searchHotels);
 router.post('/packages/search', authController.searchPackages);
 
+//NUEVA FUNCION HABITACIONES
+router.get('/hotels/:idHotel/rooms', authController.getHotelRooms);
+
 module.exports = router;

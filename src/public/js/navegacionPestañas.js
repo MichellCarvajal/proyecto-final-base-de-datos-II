@@ -9,7 +9,6 @@ const navegacion = () => {
 
     const pestañaVuelo = document.getElementById('boton-vuelos');
     const pestañaHoteles = document.getElementById('boton-hoteles');
-    const pestañaPaquetes = document.getElementById('boton-paquetes');
     
     pestañaVuelo.addEventListener('click', ()=> {
         cargarHTML('./filtroVuelo.html', initVuelos);
@@ -17,10 +16,6 @@ const navegacion = () => {
 
     pestañaHoteles.addEventListener('click', ()=> {
         cargarHTML('./filtroHoteles.html', initHoteles); // ✅ AHORA SÍ
-    });
-
-    pestañaPaquetes.addEventListener('click',()=> {
-        cargarHTML('./filtroVueloyHoteles.html');
     });
 }
 
