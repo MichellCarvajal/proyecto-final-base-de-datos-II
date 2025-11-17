@@ -1,2 +1,5 @@
 import navegacion from './navegacionPestañas.js'
-navegacion()
+import idaRegreso from './soloVuelta.js'
+
+await navegacion()
+idaRegreso()

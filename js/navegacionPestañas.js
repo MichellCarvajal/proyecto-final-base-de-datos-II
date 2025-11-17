@@ -1,18 +1,18 @@
 import cargarHTML from "./renderizado.js";
 
-const navegacion = () => {
-    cargarHTML('../filtroHoteles.html')
+const navegacion = async () => {
+    await cargarHTML('./filtroVuelo.html')
 
     const pestañaVuelo=document.getElementById('boton-vuelos')
     const pestañaHoteles=document.getElementById('boton-hoteles')
     const pestañaPaquetes=document.getElementById('boton-paquetes')
     
     pestañaVuelo.addEventListener('click', ()=> {
-        cargarHTML('../filtroVuelo.html')
+        cargarHTML('./filtroVuelo.html')
     })
 
     pestañaHoteles.addEventListener('click', ()=>{
-        cargarHTML('../filtroHoteles.html')
+        cargarHTML('./filtroHoteles.html')
     })
 }
 
