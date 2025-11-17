@@ -6,12 +6,12 @@
         <!-- tipo de viaje -->
         <div class="flex gap-8 mb-5 text-gray-700">
             <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="tipoViaje" checked>
+                <input type="radio" name="tipoViaje" checked id="ida-vuelta">
                 <span>Ida y Vuelta</span>
             </label>
 
             <label class="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="tipoViaje">
+                <input type="radio" name="tipoViaje" id="solo-ida">
                 <span>Solo Ida</span>
             </label>
 
@@ -61,7 +61,7 @@
             </div>
 
             <!--fecha de Regreso -->
-            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center" id="regreso">
                 <label class="text-xs text-gray-500">Regreso</label>
                 <div class="flex items-center gap-2">
                     <input type="date" class="w-full outline-none">
