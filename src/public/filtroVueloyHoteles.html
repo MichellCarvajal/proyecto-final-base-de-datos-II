@@ -1,0 +1,108 @@
+<!-- contenedor de filtro de vuelos -->
+<div class="w-full bg-white p-6">
+
+    <form action="">
+
+        <!-- tipo de viaje -->
+        <div class="flex gap-4 mb-5 text-gray-700">
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="tipoViaje" checked>
+                <span>Ida y Vuelta</span>
+            </label>
+
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="radio" name="tipoViaje">
+                <span>Solo Ida</span>
+            </label>
+
+            |
+
+            <div>
+                <select name="categoria" class="bg-white">
+                    <option value="economica">Económico</option>
+                    <option value="premium">Premium</option>
+                </select>
+            </div>
+            |
+            <div>
+                <select name="estrellas" class="bg-white">
+                    <option value="1">1 estrella</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="5">5 estrellas</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="flex gap-2 relative">
+
+            <!-- Origen -->
+            <div class="flex items-center w-[220px] h-[65px] border rounded px-4 bg-white">
+                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+                <div>
+                    <p class="text-sm text-gray-500">Origen</p>
+                    <input type="text" placeholder="¿desde donde viajas?">
+                </div>
+            </div>
+
+            <!-- Ícono flotante entre origen y destino -->
+            <div class="absolute left-[200px] top-[10px]
+                                        bg-white border rounded-full w-[45px] h-[45px]
+                                        flex items-center justify-center text-blue-600 text-xl shadow">
+                <i class="fa-solid fa-right-left"></i>
+            </div>
+
+            <!-- Destino -->
+            <div class="col-span-2 flex items-center w-[220px] h-[65px] border rounded px-4 bg-white">
+                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+                <div>
+                    <p class="text-sm text-gray-500">Destino</p>
+                    <input type="text" placeholder="¿a dónde viajas?">
+                </div>
+            </div>
+
+            <!--fecha de Salida -->
+            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+                <label class="text-xs text-gray-500">Salida</label>
+                <div class="flex items-center gap-2">
+                    <input type="date" class="w-full outline-none">
+                </div>
+            </div>
+
+            <!--fecha de Regreso -->
+            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center">
+                <label class="text-xs text-gray-500">Regreso</label>
+                <div class="flex items-center gap-2">
+                    <input type="date" class="w-full outline-none">
+                </div>
+            </div>
+
+            <!-- Habitaciones -->
+            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
+                <label class="text-xs text-gray-500">Habitaciones</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-house text-gray-600"></i>
+                    <input type="number" min="1" class="w-[80px]">
+                </div>
+            </div>
+
+            <!-- Viajeros -->
+            <div class="col-span-1 border rounded-lg h-[65px] p-3 flex flex-col justify-center cursor-pointer">
+                <label class="text-xs text-gray-500">Viajeros</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-user text-gray-600"></i>
+                    <input type="number" min="1" class="w-[80px]">
+                </div>
+            </div>
+
+            <!-- botón buscar -->
+            <div class="col-span-2 flex items-center justify-end">
+                <button class="w-[140px] h-[65px] bg-yellow-400 text-black font-bold rounded-lg">
+                    Buscar Vuelos
+                </button>
+            </div>
+
+    </form>
+
+</div>

@@ -1,17 +1,20 @@
+// server.js
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-require('./src/config/db'); 
+require('./src/config/db');
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public')); // <--- Para servir login.html
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// Rutas
 const authRoutes = require('./src/routes/authRoutes');
+
+// ⭐ Esta ES LA CORRECCIÓN:
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {

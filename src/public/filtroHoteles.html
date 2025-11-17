@@ -1,0 +1,98 @@
+<div class="w-[1250px] p-6 flex">
+
+    <form id="form-hoteles" class="w-full">
+
+        <!-- FILA SUPERIOR: Estrellas -->
+        <div class="flex gap-4 mb-5 text-gray-700">
+            <div>
+                <select id="select-estrellas-hotel" name="estrellas" class="bg-white border rounded px-3 py-2">
+                    <option value="1">1 estrella</option>
+                    <option value="2">2 estrellas</option>
+                    <option value="3">3 estrellas</option>
+                    <option value="4">4 estrellas</option>
+                    <option value="5">5 estrellas</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- FILA PRINCIPAL -->
+        <div class="flex gap-4 mt-[20px]">
+
+            <!-- Destino -->
+            <div class="flex items-center w-[300px] h-[65px] border rounded px-4 bg-white">
+                <i class="fa-solid fa-location-dot text-gray-600 mr-3"></i>
+                <div>
+                    <p class="text-sm text-gray-500">Estadía</p>
+                    <input 
+                        id="input-destino-hotel" 
+                        type="text" 
+                        placeholder="¿Dónde te quieres quedar?" 
+                        class="w-[200px] outline-none"
+                    >
+                </div>
+            </div>
+
+            <!-- Fecha Entrada -->
+            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center bg-white">
+                <label class="text-xs text-gray-500">Check-in</label>
+                <input 
+                    id="input-fecha-salida-hotel" 
+                    type="date" 
+                    class="w-full outline-none"
+                >
+            </div>
+
+            <!-- Fecha Salida -->
+            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center bg-white">
+                <label class="text-xs text-gray-500">Check-out</label>
+                <input 
+                    id="input-fecha-regreso-hotel" 
+                    type="date" 
+                    class="w-full outline-none"
+                >
+            </div>
+
+            <!-- Habitaciones -->
+            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center bg-white">
+                <label class="text-xs text-gray-500">Habitaciones</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-house text-gray-600"></i>
+                    <input 
+                        id="input-habitaciones-hotel" 
+                        type="number" 
+                        min="1" 
+                        class="w-[80px] outline-none"
+                    >
+                </div>
+            </div>
+
+            <!-- Viajeros -->
+            <div class="border rounded-lg h-[65px] p-3 flex flex-col justify-center bg-white">
+                <label class="text-xs text-gray-500">Viajeros</label>
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-user text-gray-600"></i>
+                    <input 
+                        id="input-viajeros-hotel" 
+                        type="number" 
+                        min="1" 
+                        class="w-[80px] outline-none"
+                    >
+                </div>
+            </div>
+
+            <!-- Botón Buscar -->
+            <div class="h-[65px] flex items-center">
+                <button 
+                    type="submit"
+                    class="w-[150px] h-full bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-500 transition">
+                    Buscar Hoteles
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+<!-- Contenedor de resultados -->
+<div id="hoteles-resultados" class="mt-10 w-full"></div>

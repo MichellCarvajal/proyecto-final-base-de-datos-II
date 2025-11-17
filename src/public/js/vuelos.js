@@ -1,322 +1,164 @@
 import { sendData } from './api.js';
 
-document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. Referencias a elementos del DOM ---
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
+export function initVuelos() {
     const formVuelos = document.getElementById('form-vuelos');
-    const messageContainer = document.getElementById('vuelos-message-container');
-    const resultsList = document.getElementById('results-list');
-    
+    if (!formVuelos) return console.error('❌ No se encontró el formulario #form-vuelos');
+
+    const divFechaRegreso = document.getElementById('div-fecha-regreso');
+    const inputFechaRegreso = document.getElementById('input-fecha-regreso');
+    const btnIntercambiar = document.getElementById('btn-intercambiar');
     const inputOrigen = document.getElementById('input-origen');
     const inputDestino = document.getElementById('input-destino');
-    const btnIntercambiar = document.getElementById('btn-intercambiar');
-    const inputFechaSalida = document.getElementById('input-fecha-salida');
-    const inputFechaRegreso = document.getElementById('input-fecha-regreso');
-    const divFechaRegreso = document.getElementById('div-fecha-regreso'); 
-    
-    // Inicializa la pestaña de Vuelos al cargar
-    showTab('vuelos');
 
+    // Contenedor de resultados dentro del formulario
+    const containerResultados = document.getElementById('vuelos-resultados');
 
-    // --- 2. Lógica de Intercambio de Pestañas ---
+    function updateRegresoVisibility() {
+        const tipo = formVuelos.querySelector('input[name="tipoViaje"]:checked').value;
+        if (tipo === 'ida_vuelta') {
+            divFechaRegreso.style.display = 'flex';
+            inputFechaRegreso.setAttribute('required', 'true');
+        } else {
+            divFechaRegreso.style.display = 'none';
+            inputFechaRegreso.removeAttribute('required');
+        }
+    }
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const targetTab = button.getAttribute('data-tab');
-            showTab(targetTab);
-        });
+    formVuelos.querySelectorAll('input[name="tipoViaje"]').forEach(r => r.addEventListener('change', updateRegresoVisibility));
+    updateRegresoVisibility();
+
+    btnIntercambiar.addEventListener('click', () => {
+        const temp = inputOrigen.value;
+        inputOrigen.value = inputDestino.value;
+        inputDestino.value = temp;
     });
 
-    /**
-     * Muestra la pestaña seleccionada y actualiza el estilo de los botones.
-     */
-    function showTab(tabId) {
-        tabContents.forEach(content => {
-            content.style.display = 'none';
-        });
-
-        tabButtons.forEach(button => {
-            button.style.borderBottom = 'none';
-            button.classList.remove('text-primary-blue', 'font-bold');
-            button.classList.add('text-gray-800', 'font-semibold');
-        });
-
-        const activeContent = document.getElementById(tabId);
-        if (activeContent) {
-            activeContent.style.display = 'block';
-        }
-
-        const activeButton = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
-        if (activeButton) {
-            // Nota: Aquí uso 'primary-blue' que se definió en el tailwind.config del HTML
-            activeButton.style.borderBottom = '2px solid #3B82F6'; 
-            activeButton.classList.add('text-primary-blue', 'font-bold');
-            activeButton.classList.remove('text-gray-800', 'font-semibold');
-        }
-    }
-
-
-    // --- 3. Funciones de Feedback ---
-
-    function displayMessage(text, color) {
-        if (messageContainer) {
-            messageContainer.textContent = text;
-            // Usamos clases de Tailwind dinámicamente: text-blue-500, text-red-500, etc.
-            messageContainer.className = `mb-4 h-6 text-center font-semibold text-${color}`;
-        }
-    }
-    
-    function resetMessageAndResults() {
-        if (messageContainer) {
-            messageContainer.textContent = '';
-            messageContainer.className = 'mb-4 h-6 text-center font-semibold';
-        }
-        if (resultsList) {
-             resultsList.innerHTML = `<div class="p-4 text-gray-500 bg-gray-50 rounded-lg">Aún no se ha realizado ninguna búsqueda.</div>`;
-        }
-    }
-
-    // --- 4. Renderizado de Resultados ---
-
-    /**
-     * Formatea una fecha y hora de la DB a formato hora (HH:MM).
-     * ⚠️ CORRECCIÓN: Se usa new Date(string) y toLocaleTimeString con opciones específicas.
-     */
-    function formatTime(dateTimeStr) {
-        if (!dateTimeStr) return 'N/D';
-
-        // Crear un objeto Date. El constructor de Date(string) suele ser robusto con DATETIME de MySQL.
-        const date = new Date(dateTimeStr); 
-
-        if (isNaN(date.getTime())) { // Comprobación más robusta de fecha inválida
-            console.error('Fecha Inválida detectada para:', dateTimeStr);
-            return "Fecha Inválida";
-        }
-
-        // Opciones de formato: solo hora y minuto en formato 24h (ej: 13:30)
-        const options = {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false, // Usar 24h
-        };
-
-        return date.toLocaleTimeString('es-ES', options);
+    function showCustomMessage(message, type) {
+        console.log(`[${type.toUpperCase()}] ${message}`);
+        alert(message);
     }
 
     /**
-     * Renderiza la lista de vuelos en la interfaz.
+     * 🚀 FUNCIÓN renderVuelos MEJORADA Y ESTILIZADA
      */
-    function renderFlightResults(flights) {
-        if (!resultsList) return;
+    function renderVuelos(vuelos) {
+        containerResultados.innerHTML = ''; // Limpiar resultados previos
 
-        resultsList.innerHTML = ''; // Limpiar resultados anteriores
-        
-        if (!flights || flights.length === 0) {
-            resultsList.innerHTML = `
-                <div class="p-4 text-gray-500 bg-red-50 border border-red-200 rounded-lg">
-                    😔 No se encontraron vuelos disponibles que coincidan con tus criterios de búsqueda.
-                </div>`;
+        if (!vuelos || vuelos.length === 0) {
+            containerResultados.innerHTML = `
+                <div class="bg-gray-50 p-8 rounded-xl shadow-inner mt-6 text-center">
+                    <p class="text-gray-500 font-medium text-lg">
+                        Parece que no hay vuelos disponibles para esta búsqueda. 😔
+                    </p>
+                    <p class="text-sm text-gray-400 mt-2">Intenta con otras fechas o destinos.</p>
+                </div>
+            `;
             return;
         }
 
-        const isRoundtrip = document.querySelector('input[name="tipoViaje"]:checked')?.value === 'ida_vuelta';
-        
-        if (isRoundtrip && flights.length > 1) {
-            // Ordenar por fecha de salida (esto ayuda a separar Ida de Regreso)
-            // ⚠️ CORRECCIÓN: Se usa flight.fechaSalida en lugar de flight.fechaHoraSalida
-            flights.sort((a, b) => new Date(a.fechaSalida) - new Date(b.fechaSalida));
-            
-            // Asume que los primeros son Ida y los segundos Regreso
-            // ⚠️ CORRECCIÓN: Se usa flight.fechaSalida en lugar de flight.fechaHoraSalida
-            const departureDate = flights[0].fechaSalida.split('T')[0]; 
-            const returnDate = flights[flights.length - 1].fechaSalida.split('T')[0];
-            
-            // Filtra y separa en grupos basándose en el sentido (origen/destino)
-            const idaFlights = flights.filter(f => f.origen === inputOrigen.value.trim());
-            const regresoFlights = flights.filter(f => f.origen === inputDestino.value.trim());
+        vuelos.forEach(vuelo => {
+            // Formatear precio y fechas
+            const precioFormateado = new Intl.NumberFormat('es-CO', { 
+                style: 'currency', 
+                currency: 'USD',
+                minimumFractionDigits: 0 
+            }).format(vuelo.precioBase);
 
-            resultsList.innerHTML += `<h3 class="text-xl font-bold text-gray-700 mb-2">✈️ Vuelos de IDA - ${departureDate}</h3>`;
-            renderFlightGroup(idaFlights, 'blue');
-            
-            resultsList.innerHTML += `<h3 class="text-xl font-bold text-gray-700 mt-6 mb-2">↩️ Vuelos de REGRESO - ${returnDate}</h3>`;
-            renderFlightGroup(regresoFlights, 'green');
+            const fechaSalida = new Date(vuelo.fechaSalida).toLocaleString('es-ES', { 
+                day: 'numeric', 
+                month: 'short', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            const fechaLlegada = new Date(vuelo.fechaLlegada).toLocaleString('es-ES', { 
+                day: 'numeric', 
+                month: 'short', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
 
-        } else {
-            // Solo ida o un solo resultado 
-            resultsList.innerHTML += `<h3 class="text-xl font-bold text-gray-700 mb-2">✈️ Vuelos encontrados</h3>`;
-            renderFlightGroup(flights, 'default');
-        }
-        
-        displayMessage(`✅ ¡Búsqueda exitosa! Se encontraron ${flights.length} vuelos en total.`, 'green-500');
-    }
-    
-    /**
-     * Genera el HTML para un grupo de vuelos.
-     */
-    function renderFlightGroup(flights, type) {
-        flights.forEach(flight => {
-            // Colores basados en el tipo de vuelo (IDA/REGRESO)
-            const typeColor = type === 'blue' ? 'text-primary-blue' : type === 'green' ? 'text-green-600' : 'text-primary-blue';
-            const priceColor = type === 'blue' ? 'text-primary-blue' : type === 'green' ? 'text-green-600' : 'text-primary-blue';
-            
-            // ⚠️ CORRECCIÓN: Se usa flight.fechaSalida y flight.fechaLlegada
-            const departureTime = formatTime(flight.fechaSalida);
-            const arrivalTime = formatTime(flight.fechaLlegada);
+            const card = document.createElement('div');
+            card.className = 'bg-white border border-blue-100 rounded-xl p-6 shadow-md hover:shadow-xl transition flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-4';
 
-            const flightCard = `
-                <div class="bg-white border border-gray-200 rounded-xl shadow-lg p-5 flex justify-between items-center transition-all duration-300 hover:shadow-xl">
-                    <div class="flex items-center space-x-6">
-                        <i class="fa-solid fa-plane text-2xl ${typeColor}"></i>
-                        <div>
-                            <p class="text-xs text-gray-500 font-medium">Vuelo #${flight.idVuelo} | ${flight.clase.toUpperCase()}</p>
-                            <h3 class="text-xl font-bold text-gray-900">${flight.origen} <span class="text-gray-400">→</span> ${flight.destino}</h3>
+            card.innerHTML = `
+                <div class="flex items-center gap-6 w-full">
+                    
+                    <div class="flex-1 min-w-0">
+                        <h3 class="font-extrabold text-xl text-blue-800">${vuelo.origen.toUpperCase()} → ${vuelo.destino.toUpperCase()}</h3>
+                        <span class="text-xs font-semibold px-2 py-0.5 mt-1 inline-block rounded ${vuelo.clase.toLowerCase() === 'premium' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-200 text-gray-700'}">
+                            ${vuelo.clase.toUpperCase()}
+                        </span>
+                        <p class="text-sm text-gray-500 mt-1">Aerolínea: ${vuelo.aerolinea}</p>
+                    </div>
+
+                    <div class="flex flex-col gap-2 border-l border-r px-6 border-gray-200">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-plane-departure text-blue-500"></i>
+                            <p class="text-sm text-gray-700"><strong>Sale:</strong> ${fechaSalida}</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-plane-arrival text-blue-500"></i>
+                            <p class="text-sm text-gray-700"><strong>Llega:</strong> ${fechaLlegada}</p>
                         </div>
                     </div>
-
-                    <div class="text-center">
-                        <p class="text-lg font-bold text-gray-700">${departureTime} - ${arrivalTime}</p>
-                        <p class="text-xs text-gray-500">Horario</p>
-                    </div>
-
-                    <div class="text-right">
-                        <p class="text-sm text-gray-600">Asientos: <span class="font-bold ${typeColor}">${flight.asientosDisponibles}</span></p>
-                        <h4 class="text-3xl font-extrabold ${priceColor} mb-2">
-                            $${new Intl.NumberFormat('es-CO').format(flight.precioBase)}
-                        </h4>
-                        <button class="bg-primary-yellow text-black font-semibold px-4 py-2 rounded-lg hover:bg-yellow-500 transition-colors duration-200 text-sm">
-                            Seleccionar
+                    
+                    <div class="flex flex-col items-end gap-2 text-right flex-shrink-0">
+                        <p class="text-2xl font-bold text-green-600">${precioFormateado}</p>
+                        <p class="text-xs text-gray-500">
+                            Asientos disponibles: <span class="font-bold text-green-600">${vuelo.asientosDisponibles}</span>
+                        </p>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full shadow-lg transition duration-200 mt-2">
+                            Seleccionar Vuelo
                         </button>
                     </div>
+
                 </div>
             `;
-            resultsList.innerHTML += flightCard;
+
+            containerResultados.appendChild(card);
         });
     }
 
-    // --- 5. Lógica de Búsqueda de Vuelos (Manejador de Submit) ---
-    
-    if (formVuelos) {
-        formVuelos.addEventListener('submit', handleSearchFlights);
-    }
+    formVuelos.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    async function handleSearchFlights(event) {
-        event.preventDefault(); 
-        
-        displayMessage('Buscando vuelos... Por favor, espera.', 'primary-blue');
-        
-        // Deshabilitar botón de búsqueda
-        const searchButton = document.getElementById('btn-buscar-vuelos');
-        searchButton.disabled = true;
-        searchButton.classList.add('opacity-50', 'cursor-not-allowed');
+        const claseSeleccionada = (document.getElementById('select-categoria').value.toLowerCase() === 'premium') 
+            ? 'premium' 
+            : 'economica';
 
-        // Recolección de datos
-        const origen = inputOrigen.value.trim();
-        const destino = inputDestino.value.trim();
-        const salida = inputFechaSalida.value;
-        const viajeros = parseInt(document.getElementById('input-viajeros').value, 10);
-        
-        // Mapeo de valores del frontend al backend
-        const clase = document.getElementById('select-categoria').value === 'economica' ? 'Económica' : 'Premium'; 
-        const tipoViajeInput = document.querySelector('input[name="tipoViaje"]:checked');
-        
-        const tipoViaje = tipoViajeInput && tipoViajeInput.value === 'ida_vuelta' ? 'roundtrip' : 'solo_ida'; 
-        
-        const regreso = (tipoViaje === 'roundtrip') ? inputFechaRegreso.value : null;
+        const tripType = formVuelos.querySelector('input[name="tipoViaje"]:checked').value;
 
-        // Validaciones del lado del cliente (opcional, pero útil)
-        if (tipoViaje === 'roundtrip' && !regreso) {
-             displayMessage('❌ Debes seleccionar una fecha de regreso para un viaje de Ida y Vuelta.', 'red-500');
-             searchButton.disabled = false;
-             searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
-             return;
-        }
-        
-        if (origen.toLowerCase() === destino.toLowerCase()) {
-             displayMessage('❌ El origen y el destino no pueden ser el mismo.', 'red-500');
-             searchButton.disabled = false;
-             searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
-             return;
-        }
-
-
-        // Payload ajustado para el backend (authService.findAvailableFlights)
-        const searchData = {
-            origen: origen, 
-            destino: destino, 
-            fechaSalida: salida, 
-            fechaRegreso: regreso, 
-            viajeros: viajeros,
-            clase: clase,
-            tripType: tipoViaje
+        const data = {
+            origen: inputOrigen.value.trim(),
+            destino: inputDestino.value.trim(),
+            fechaSalida: document.getElementById('input-fecha-salida').value,
+            clase: claseSeleccionada,
+            viajeros: parseInt(document.getElementById('input-viajeros').value),
+            tripType: tripType
         };
-        
+
+        if (tripType === 'ida_vuelta') data.fechaRegreso = inputFechaRegreso.value;
+
+        if (!data.origen || !data.destino || !data.fechaSalida || data.viajeros < 1) {
+            showCustomMessage("Completa todos los campos obligatorios.", 'error');
+            return;
+        }
+        if (tripType === 'ida_vuelta' && !data.fechaRegreso) {
+            showCustomMessage("Debes seleccionar la fecha de regreso.", 'error');
+            return;
+        }
+
         try {
-            // Usamos el endpoint correcto: /api/auth/flights/search
-            const response = await sendData("auth/flights/search", searchData, 'POST');
+            const resultados = await sendData("auth/flights/search", data, "POST");
+            const flights = resultados.flights || [];
+            showCustomMessage(`¡Búsqueda exitosa! Se encontraron ${flights.length} vuelos.`, 'success');
 
-            if (response && response.flights) {
-                renderFlightResults(response.flights);
-            } else {
-                 renderFlightResults([]); // No se encontraron vuelos o respuesta incompleta
-            }
+            // Renderizar vuelos con la nueva función estilizada
+            renderVuelos(flights);
 
-        } catch (error) {
-            // Manejo de errores de la API
-            const errorMessage = error.message || 'Ocurrió un error desconocido al buscar vuelos.';
-            displayMessage(`❌ Error de búsqueda: ${errorMessage}`, 'red-500');
-            if (resultsList) {
-                resultsList.innerHTML = `<div class="p-4 text-red-700 bg-red-100 border border-red-300 rounded-lg">Error: ${errorMessage}</div>`;
-            }
-        } finally {
-            // Restablecer el botón
-            searchButton.disabled = false;
-            searchButton.classList.remove('opacity-50', 'cursor-not-allowed');
-        }
-    }
-    
-    // --- 6. Lógica de Intercambio de Origen/Destino ---
-    if (btnIntercambiar) {
-        btnIntercambiar.addEventListener('click', () => {
-            const temp = inputOrigen.value;
-            inputOrigen.value = inputDestino.value;
-            inputDestino.value = temp;
-            resetMessageAndResults();
-        });
-    }
-
-    // --- 7. Lógica para deshabilitar/habilitar fecha de regreso (Solo Ida) ---
-    document.querySelectorAll('input[name="tipoViaje"]').forEach(radio => {
-        radio.addEventListener('change', (e) => {
-            const isSoloIda = e.target.value === 'solo_ida';
-            
-            inputFechaRegreso.disabled = isSoloIda;
-            inputFechaRegreso.required = !isSoloIda;
-            
-            if (isSoloIda) {
-                inputFechaRegreso.value = '';
-                divFechaRegreso.classList.add('opacity-50');
-                divFechaRegreso.style.pointerEvents = 'none'; // Desactiva clics
-            } else {
-                divFechaRegreso.classList.remove('opacity-50');
-                divFechaRegreso.style.pointerEvents = 'auto';
-            }
-            resetMessageAndResults();
-        });
-    });
-
-    // --- 8. Lógica para setear la fecha mínima (evitar búsquedas en el pasado) ---
-    const today = new Date().toISOString().split('T')[0];
-    inputFechaSalida.min = today;
-    inputFechaRegreso.min = today;
-
-    inputFechaSalida.addEventListener('change', (e) => {
-        // La fecha de regreso no puede ser anterior a la de salida
-        inputFechaRegreso.min = e.target.value || today;
-        if (inputFechaRegreso.value < e.target.value) {
-            inputFechaRegreso.value = e.target.value;
+        } catch (err) {
+            console.error("❌ Error en búsqueda:", err);
+            showCustomMessage("Error en la búsqueda: " + (err.message || "Error al conectar con el servidor."), 'error');
         }
     });
-
-
-});
+}

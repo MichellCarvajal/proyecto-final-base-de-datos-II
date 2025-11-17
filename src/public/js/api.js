@@ -1,29 +1,28 @@
-// public/js/api.js
-const BASE_URL = 'http://localhost:3000/api'; 
+// Archivo: public/js/api.js
 
-export async function sendData(endpoint, data, method = 'POST') {
+const API_URL = "http://localhost:3000/api/";
+
+export async function sendData(endpoint, data = {}, method = "POST") {
     try {
-        const response = await fetch(`${BASE_URL}/${endpoint}`, {
+        const response = await fetch(API_URL + endpoint, {
             method: method,
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(data),
+            body: method === "GET" ? null : JSON.stringify(data)
         });
 
-        const responseData = await response.json();
-
         if (!response.ok) {
-            throw new Error(responseData.message || `Error HTTP ${response.status}`);
+            const errorData = await response.json().catch(() => ({
+                message: "Error desconocido"
+            }));
+            throw new Error(errorData.message || "Error en la solicitud");
         }
 
-        return responseData;
+        return await response.json();
 
     } catch (error) {
-        console.error("Error en sendData:", error);
-        if (error.message.includes('Failed to fetch')) {
-            throw new Error('No se pudo conectar con el servidor. ¿Está ejecutando node server.js?');
-        }
+        console.error("API Error:", error);
         throw error;
     }
 }
