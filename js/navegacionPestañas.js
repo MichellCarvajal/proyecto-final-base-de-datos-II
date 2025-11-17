@@ -1,12 +1,7 @@
 import cargarHTML from "./renderizado.js";
 
-<<<<<<< HEAD
-const navegacion = () => {
-    cargarHTML('../filtroVuelo.html')
-=======
 const navegacion = async () => {
     await cargarHTML('./filtroVuelo.html')
->>>>>>> miguel
 
     const pestañaVuelo=document.getElementById('boton-vuelos')
     const pestañaHoteles=document.getElementById('boton-hoteles')
