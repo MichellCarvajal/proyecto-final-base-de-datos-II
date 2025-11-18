@@ -12,10 +12,41 @@ export function initHoteles() {
         return;
     }
 
+    function agregarHabitacionAlCarrito(room, hotel) {
+    let user = JSON.parse(sessionStorage.getItem("user"));
+
+    if (!user) {
+        alert("⚠️ Necesitas iniciar sesión para seleccionar una habitación.");
+        return;
+    }
+
+    if (!Array.isArray(user.carritoHoteles)) {
+        user.carritoHoteles = [];
+    }
+
+    // Habitaciones sin ID único rompen el carrito → le creamos uno
+    const item = {
+        ...room,
+        hotelNombre: hotel.nombre,
+        hotelId: hotel.idHotel,
+        _itemId: crypto.randomUUID()
+    };
+
+    user.carritoHoteles.push(item);
+
+    sessionStorage.setItem("user", JSON.stringify(user));
+
+    alert("🏨 Habitación agregada al carrito.");
+}
+
     /**
      * 🏨 RENDERIZADOR ESTILIZADO DE HOTELES
      */
+
+    let lastHotels = []; // Al inicio de initHoteles
+
     function renderHoteles(hoteles) {
+    lastHotels = hoteles;
     contenedor.innerHTML = "";
 
     if (!hoteles || hoteles.length === 0) {
@@ -130,19 +161,19 @@ export function initHoteles() {
     const contenedor = document.getElementById("hoteles-resultados");
 
     contenedor.innerHTML = `
-        <p class="text-center text-gray-500 mt-10">
-            Cargando habitaciones...
-        </p>
+        <p class="text-center text-gray-500 mt-10">Cargando habitaciones...</p>
     `;
 
     try {
         const data = await sendData(`auth/hotels/${idHotel}/rooms`, null, "GET");
         const rooms = data.rooms || [];
 
-        renderHabitaciones(rooms);
+        // Buscar hotel en el último resultado para pasarlo completo:
+        const hotel = lastHotels.find(h => h.idHotel === idHotel);
+        renderHabitaciones(rooms, hotel);
+
 
     } catch (error) {
-        console.error("❌ Error al cargar habitaciones:", error);
         contenedor.innerHTML = `
             <p class="text-center text-red-500 mt-10">
                 Error al cargar las habitaciones.
@@ -150,7 +181,9 @@ export function initHoteles() {
         `;
     }
 }
-function renderHabitaciones(rooms) {
+
+
+function renderHabitaciones(rooms, hotel) {
     const contenedor = document.getElementById("hoteles-resultados");
     contenedor.innerHTML = "";
 
@@ -183,21 +216,23 @@ function renderHabitaciones(rooms) {
 
             <button 
                 ${room.disponibilidad !== "LIBRE" ? "disabled" : ""}
-                class="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg disabled:bg-gray-300">
+                class="btn-seleccionar-hab mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg disabled:bg-gray-300">
                 Seleccionar
             </button>
         `;
 
-        // Evento del botón "Seleccionar"
-        card.querySelector("button").addEventListener("click", () => {
+        const btn = card.querySelector(".btn-seleccionar-hab");
+
+        btn.addEventListener("click", () => {
             if (room.disponibilidad === "LIBRE") {
-                alert(`Habitación ${room.categoria} seleccionada ✔`);
+                agregarHabitacionAlCarrito(room, hotel);
             }
         });
 
         contenedor.appendChild(card);
     });
 }
+
 
 
 

@@ -52,6 +52,22 @@ document.addEventListener('DOMContentLoaded', () => {
             // Llama a la ruta: POST /api/auth/login
             const response = await sendData('auth/login', loginData, 'POST');
 
+          if (response.user) {
+
+    // El usuario del backend NO trae carrito, así que se lo agregamos.
+    const userData = {
+        ...response.user,
+        carritoVuelos: [],   // <--- AGREGADO
+        carritoHoteles: []   // <--- opcional si luego añades hoteles
+    };
+
+    sessionStorage.setItem("user", JSON.stringify(userData));
+
+} else {
+    sessionStorage.setItem("user", "");
+}
+
+
             // Muestra el mensaje de éxito del servidor
             messageContainer.textContent = `✅ ${response.message}`; 
             messageContainer.className = 'text-center font-bold h-6 mb-3 text-green-500';
@@ -63,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 // Aquí debes redirigir a la página principal de tu aplicación (ej: 'home.html' o 'dashboard.html')
                 // Por ahora, usamos 'index.html' solo como ejemplo.
-                window.location.href = 'filtrosBusqueda.html'; 
+                window.location.href = 'login.html'; 
             }, 1000); 
             
             // Nota: No es necesario re-habilitar el botón porque vamos a redirigir inmediatamente.

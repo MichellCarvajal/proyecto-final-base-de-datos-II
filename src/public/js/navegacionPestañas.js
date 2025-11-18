@@ -1,6 +1,7 @@
 import cargarHTML from "./renderizado.js";
 import { initVuelos } from "./vuelos.js";
 import { initHoteles } from "./hoteles.js";   // ✅ IMPORTANTE
+import idaRegreso from "./soloVuelta.js";
 
 const navegacion = () => {
 

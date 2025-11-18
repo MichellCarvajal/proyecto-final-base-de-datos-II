@@ -14,6 +14,31 @@ export function initVuelos() {
     // Contenedor de resultados dentro del formulario
     const containerResultados = document.getElementById('vuelos-resultados');
 
+    //FUNCION CARRITO
+    function agregarVueloAlCarrito(vuelo) {
+    let user = JSON.parse(sessionStorage.getItem("user"));
+
+    if (!user) {
+        alert("❌ Necesitas iniciar sesión para guardar un vuelo.");
+        return;
+    }
+
+    // Crear si no existe
+    if (!Array.isArray(user.carritoVuelos)) {
+        user.carritoVuelos = [];
+    }
+
+    // Le damos un id único dentro del carrito
+    vuelo._itemId = crypto.randomUUID();
+
+    user.carritoVuelos.push(vuelo);
+
+    sessionStorage.setItem("user", JSON.stringify(user));
+
+    alert("✈️ Vuelo agregado al carrito.");
+}
+
+
     function updateRegresoVisibility() {
         const tipo = formVuelos.querySelector('input[name="tipoViaje"]:checked').value;
         if (tipo === 'ida_vuelta') {
@@ -110,7 +135,7 @@ export function initVuelos() {
                     <p class="text-xs text-gray-500">
                         Asientos disponibles: <span class="font-bold text-green-600">${vuelo.asientosDisponibles}</span>
                     </p>
-                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full shadow-lg transition duration-200 mt-2">
+                    <button class="btn-seleccionar bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full shadow-lg transition duration-200 mt-2">
                         Seleccionar Vuelo
                     </button>
                 </div>
@@ -119,6 +144,11 @@ export function initVuelos() {
         `;
 
         contenedor.appendChild(card);
+          // ⚠️ MUY IMPORTANTE: conectar el botón al carrito
+        const btn = card.querySelector('.btn-seleccionar');
+        btn.addEventListener('click', () => {
+            agregarVueloAlCarrito(vuelo);
+        });
     });
 }
 

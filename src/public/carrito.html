@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C&M travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!--banner-->
+    <div>
+        <div class="w-screen h-[70px] bg-blue-500 flex items-center justify-between px-5 border-b-2 border-b-gray-200">
+            <div class="text-white font-bold text-2xl">C&M travels</div>
+            <div class="flex gap-5 text-white text-2xl">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+        </div>
+
+        <!--fondo gris de la página-->
+        <div class="bg-gray-200 w-screen h-lvh flex pt-5 justify-center">
+            <div class="flex flex-col items-center gap-4">
+                <p class="text-xl font-semibold">Lista de Servicios</p>
+
+                <!-- Contenedor Resultados: AGREGAR LA CLASE lista-servicios -->
+                <div class="lista-servicios w-[1000px] h-[500px] bg-white rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] overflow-auto">
+                </div>
+            </div>
+
+            <button class="fixed bottom-4 right-6 bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
+                Continuar
+            </button>
+
+            <a href="filtrosBusqueda.html" class="text-blue-500 font-semibold fixed bottom-4 left-6">
+                <i class="fa-solid fa-arrow-left"></i>Volver
+            </a>
+        </div>
+
+        <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const contenedor = document.querySelector(".lista-servicios");
+
+    if (!contenedor) return console.error("❌ No se encontró el contenedor '.lista-servicios'");
+
+    const user = JSON.parse(sessionStorage.getItem("user")) || {};
+    const vuelos = user.carritoVuelos || [];
+    const hoteles = user.carritoHoteles || [];
+
+    if (vuelos.length === 0 && hoteles.length === 0) {
+        contenedor.innerHTML = `<p class="text-gray-500 text-center mt-10 text-lg">No tienes vuelos ni habitaciones en tu carrito.</p>`;
+        return;
+    }
+
+    // ===== RENDER VUELOS =====
+    if (vuelos.length > 0) {
+        const tituloVuelos = document.createElement("h2");
+        tituloVuelos.textContent = "✈️ Vuelos seleccionados";
+        tituloVuelos.className = "text-xl font-bold mt-4 mb-2 text-blue-700";
+        contenedor.appendChild(tituloVuelos);
+
+        vuelos.forEach(vuelo => {
+            const precio = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(vuelo.precioBase);
+            const item = document.createElement("div");
+            item.className = "bg-white border border-gray-200 p-4 rounded-xl shadow mb-3 flex justify-between items-center";
+            item.innerHTML = `
+                <div>
+                    <p class="font-bold text-lg">${vuelo.origen} → ${vuelo.destino}</p>
+                    <p class="text-sm text-gray-600">${vuelo.aerolinea}</p>
+                    <p class="text-sm text-gray-700">Clase: <strong>${vuelo.clase}</strong></p>
+                    <p class="text-sm text-gray-700">Precio: <strong>${precio}</strong></p>
+                </div>
+                <button data-id="${vuelo._itemId}" class="btn-eliminar bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Eliminar</button>
+            `;
+            contenedor.appendChild(item);
+        });
+    }
+
+    // ===== RENDER HOTELES =====
+    if (hoteles.length > 0) {
+        const tituloHoteles = document.createElement("h2");
+        tituloHoteles.textContent = "🏨 Habitaciones seleccionadas";
+        tituloHoteles.className = "text-xl font-bold mt-6 mb-2 text-green-700";
+        contenedor.appendChild(tituloHoteles);
+
+        hoteles.forEach(hotel => {
+            const precio = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(hotel.precioNoche);
+            const item = document.createElement("div");
+            item.className = "bg-white border border-gray-200 p-4 rounded-xl shadow mb-3 flex justify-between items-center";
+            item.innerHTML = `
+                <div>
+                    <p class="font-bold text-lg">${hotel.hotelNombre} - ${hotel.categoria}</p>
+                    <p class="text-gray-600">Precio por noche: <strong>${precio}</strong></p>
+                </div>
+                <button data-id="${hotel._itemId}" class="btn-eliminar bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Eliminar</button>
+            `;
+            contenedor.appendChild(item);
+        });
+    }
+
+    // ===== EVENTO ELIMINAR =====
+    document.addEventListener("click", e => {
+        if (e.target.classList.contains("btn-eliminar")) {
+            const id = e.target.dataset.id;
+
+            if (user.carritoVuelos) user.carritoVuelos = user.carritoVuelos.filter(x => x._itemId !== id);
+            if (user.carritoHoteles) user.carritoHoteles = user.carritoHoteles.filter(x => x._itemId !== id);
+
+            sessionStorage.setItem("user", JSON.stringify(user));
+            location.reload();
+        }
+    });
+});
+        </script>
+</body>
+</html>

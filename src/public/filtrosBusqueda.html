@@ -19,9 +19,14 @@
                 C&M travels
             </div>
 
+            <div id="user-info"></div>
+
             <!-- Iconos derecha -->
             <div class="flex gap-5 text-white text-2xl">
+                <a href="carrito.html">
                 <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+
                 <i class="fa-solid fa-circle-user"></i> 
             </div>
         </div>
@@ -53,5 +58,24 @@
 
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+    const box = document.getElementById("user-info");
+
+    const user = sessionStorage.getItem("user");
+
+    if (!user || user === "") {
+        box.innerHTML = "<span style='color:red'>No hay usuario en sesión</span>";
+        return;
+    }
+
+    const u = JSON.parse(user);
+    box.innerHTML = `
+        <strong>Usuario en sesión:</strong> ${u.nombre} (${u.correo})
+    `;
+});
+
+    </script>
 </body>
 </html>
