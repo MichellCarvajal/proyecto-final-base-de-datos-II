@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C&M travels</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./js/main.js" type="module" defer></script>
+</head>
+
+<body>
+    <!--banner-->
+    <div>
+        <div class="w-screen h-[70px] bg-blue-500 flex items-center justify-between px-5 border-b-2 border-b-gray-200">
+
+            <!-- Texto izquierda -->
+            <div class="text-white font-bold text-2xl">
+                C&M travels
+            </div>
+
+            <!-- Iconos derecha -->
+            <div class="flex gap-5 text-white text-2xl">
+                <a href="carrito.html">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </a>
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+        </div>
+
+        <!--Fondo gris de la página-->
+        <div class="bg-gray-200 w-screen h-full pb-[60px] pt-10">
+
+            <!--contenedor horizontal-->
+            <div class="grid grid-cols-2 gap-4 ml-12">
+                <!-- Bloque 1: Información del pasajero -->
+                <div class="flex flex-col">
+                    <p class="text-xl font-semibold mb-2">Información de los pasajeros</p>
+
+                    <!--pasajero 1 contacto principal-->
+                    <div class="bg-white w-[700px] h-[400px] rounded-xl mt-3 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+
+                        <!--titulo contenedor-->
+                        <div class="w-[700px] h-[50px] text-lg p-4 font-semibold">
+                            Pasajero 1: contacto principal
+                        </div>
+
+                        <!--línea divisoria-->
+                        <div class="w-[700px] h-[2px] flex justify-center">
+                            <div class="w-[670px] h-[2px] bg-gray-800 rounded-lg"></div>
+                        </div>
+
+                        <!--formulario-->
+                        <form class="w-[700px] h-auto grid grid-cols-2 gap-4 p-4 mt-2">
+
+                            <!-- Nombre -->
+                            <div class="flex flex-col">
+                                <label for="nombre-registro">Nombre:</label>
+                                <input type="text" id="nombre-registro" placeholder="Ingrese su nombre" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                            </div>
+
+                            <!-- Tipo documento -->
+                            <div class="flex flex-col">
+                                <label for="tipoDocumento-registro">Tipo documento:</label>
+                                <select id="tipoDocumento-registro" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                                    <option value="">Seleccionar opción</option>
+                                    <option value="cc">Cédula de ciudadanía</option>
+                                    <option value="ti">Tarjeta de identidad</option>
+                                </select>
+                            </div>
+
+                            <!-- Número documento -->
+                            <div class="flex flex-col">
+                                <label for="numeroDocumento-registro">Número documento:</label>
+                                <input type="number" id="numeroDocumento-registro" placeholder="Ingrese su número"
+                                    required class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                            </div>
+
+                            <!-- Fecha nacimiento -->
+                            <div class="flex flex-col">
+                                <label for="fechaNacimiento-registro">Fecha nacimiento:</label>
+                                <input type="date" id="fechaNacimiento-registro" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                            </div>
+
+                            <!-- Nacionalidad -->
+                            <div class="flex flex-col">
+                                <label for="nacionalidad-registro">Nacionalidad:</label>
+                                <input type="text" id="nacionalidad-registro" placeholder="Ingrese su nacionalidad"
+                                    required class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                            </div>
+
+                            <!--telefono 1-->
+                            <div>
+                                <label for="telefono1-registro">Teléfono principal: </label>
+                                <input type="number" id="telefono1-register" placeholder="ingrese su teléfono" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] w-[327px] p-2">
+                            </div>
+
+                            <!--telefono 2-->
+                            <div>
+                                <label for="telefono2-register">Teléfono secundario: </label>
+                                <input type="number" id="telefono2-register" placeholder="ingrese su teléfono" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] w-[327px] p-2">
+                            </div>
+
+                            <!-- Correo -->
+                            <div class="flex flex-col">
+                                <label for="correo-registro">Correo:</label>
+                                <input type="email" id="correo-registro" placeholder="Ingrese su correo" required
+                                    class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Bloque 2: Resumen de la reserva -->
+                <div class="flex flex-col ml-[100px]">
+                    <p class="text-xl font-semibold mb-2">Resumen de la reserva</p>
+
+                    <div class="bg-white w-[550px] h-[465px] rounded-xl mt-3 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+
+                        <!--Servicios de la reserva-->
+                        <div class="w-[550px] h-[400px]">
+                        </div>
+
+                        <!--línea divisoria-->
+                        <div class="w-[550px] h-[2px] flex justify-center">
+                            <div class="w-[520px] h-[3px] bg-gray-800 rounded-lg"></div>
+                        </div>
+
+                        <!--total-->
+                        <div class="w-[550px] h-[50pxpx] p-4 text-xl font-bold">
+                            <p>Total: </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--contenedor vertical-->
+            <div class="ml-12 grid grid-cols-1 gap-5">
+
+                <!--Bloque 3: información de los acompañantes (en caso de haber)-->
+                <div class="bg-white w-[700px] h-[320px] rounded-xl mt-3 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+
+                    <!--titulo contenedor-->
+                    <div class="w-[700px] h-[50px] text-lg p-4 font-semibold">
+                        Pasajero 2:
+                    </div>
+
+                    <!--línea divisoria-->
+                    <div class="w-[700px] h-[2px] flex justify-center">
+                        <div class="w-[670px] h-[2px] bg-gray-800 rounded-lg"></div>
+                    </div>
+
+                    <!--formulario-->
+                    <form class="w-[700px] h-auto grid grid-cols-2 gap-4 p-4 mt-2">
+
+                        <!-- Nombre -->
+                        <div class="flex flex-col">
+                            <label for="nombre-registro">Nombre:</label>
+                            <input type="text" id="nombre-registro" placeholder="Ingrese su nombre" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                        </div>
+
+                        <!-- Tipo documento -->
+                        <div class="flex flex-col">
+                            <label for="tipoDocumento-registro">Tipo documento:</label>
+                            <select id="tipoDocumento-registro" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                                <option value="">Seleccionar opción</option>
+                                <option value="cc">Cédula de ciudadanía</option>
+                                <option value="ti">Tarjeta de identidad</option>
+                            </select>
+                        </div>
+
+                        <!-- Número documento -->
+                        <div class="flex flex-col">
+                            <label for="numeroDocumento-registro">Número documento:</label>
+                            <input type="number" id="numeroDocumento-registro" placeholder="Ingrese su número" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                        </div>
+
+                        <!-- Fecha nacimiento -->
+                        <div class="flex flex-col">
+                            <label for="fechaNacimiento-registro">Fecha nacimiento:</label>
+                            <input type="date" id="fechaNacimiento-registro" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                        </div>
+
+                        <!-- Nacionalidad -->
+                        <div class="flex flex-col">
+                            <label for="nacionalidad-registro">Nacionalidad:</label>
+                            <input type="text" id="nacionalidad-registro" placeholder="Ingrese su nacionalidad" required
+                                class="border border-2 border-gray-400 rounded-lg h-[35px] p-2">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón flotante -->
+            <button class="fixed bottom-4 right-6 bg-blue-600 text-white px-4 py-2 rounded-lg shadow">
+                Confirmar Reserva
+            </button>
+
+            <!--volver al carrito-->
+            <a href="carrito.html" class="text-blue-500 font-semibold fixed bottom-4 left-6">
+                <i class="fa-solid fa-arrow-left"></i>Volver
+            </a>
+        </div>
+</body>
+
+</html>
